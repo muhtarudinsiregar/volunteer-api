@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
  */
 
 Route::post('login', 'LoginController@index');
+Route::post('register', 'RegisterController@store');
 Route::middleware('auth:api')
     ->group(
         function () {
