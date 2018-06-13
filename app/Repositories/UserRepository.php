@@ -6,7 +6,7 @@ use App\User;
 
 class UserRepository
 {
-    public function create($request)
+    public function store($request)
     {
         return User::create($request);
     }

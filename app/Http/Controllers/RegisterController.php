@@ -26,7 +26,7 @@ class RegisterController extends Controller
         $statusConflict = 409;
 
         try {
-            $createUser = $this->userRepo->create($request->all());
+            $createUser = $this->userRepo->store($request->all());
             return response()->json(['success' => (boolean)$createUser]);
         } catch (\Exception $e) {
             return response()->json(
