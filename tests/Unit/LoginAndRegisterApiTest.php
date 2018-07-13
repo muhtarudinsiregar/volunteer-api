@@ -13,7 +13,7 @@ class LoginAndRegisterApiTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testRegister()
     {
         $user = [
             'email' => 'admin@gmail.com',
@@ -27,20 +27,24 @@ class LoginAndRegisterApiTest extends TestCase
         $this->assertDatabaseHas('users', $user);
     }
 
-    public function testValidationRegisterUser()
+    public function testValidationRegisterUserIfNameNull()
     {
         $user = [
             'email' => 'admin@gmail.com',
-            // 'name' => 'admin',
             'password' => bcrypt('secret')
         ];
-        $response = $this->post(route('api.register'), $user, ['Content-Type', 'application/json']);
-
-        $response->assertStatus(302);
-        $response->assertSessionHasErrors(
+        $response = $this->post(
+            route('api.register'),
+            $user,
             [
-                ' name ' => ' The name may not be greater than 50 characters .'
+                'Accept' => 'application/json'
             ]
+        );
+
+        $response->assertStatus(422);
+
+        $response->assertJsonStructure(
+            ['message', 'errors' => ['name']]
         );
     }
 }
